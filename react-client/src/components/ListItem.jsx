@@ -1,26 +1,12 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
+import {
+  Button, Typography, CardContent, CardHeader, CardActionArea, CardMedia, CardActions,
+} from '@mui/material';
 import PhotoModal from './PhotoModal.jsx';
-
 
 // import { createMuiTheme } from '@material-ui/core/styles';
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     backgroundColor: '#ffffff',
     color: theme.palette.text.main,
@@ -28,8 +14,8 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9,
-    marginTop:'30'
-  }
+    marginTop: '30',
+  },
 });
 
 function rand() {
@@ -47,26 +33,22 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  cardAction: {
-    display: 'block',
-    textAlign: 'initial'
-  }
-}));
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     position: 'absolute',
+//     width: 400,
+//     backgroundColor: theme.palette.background.paper,
+//     border: '2px solid #000',
+//     boxShadow: theme.shadows[5],
+//     padding: theme.spacing(2, 4, 3),
+//   },
+//   cardAction: {
+//     display: 'block',
+//     textAlign: 'initial'
+//   }
+// }));
 
-
-
-
-
-const ListItem = (props) => {
+function ListItem(props) {
   // const { firstStyle, secondStyle } = useStyles(props);
   const { classes } = props;
 
@@ -76,14 +58,14 @@ const ListItem = (props) => {
   //   console.log(randomGenre)
   //   props.handleListUpdate('?' + randomGenre + '&platforms=' )
   // }
-  let platformArr = props.game.platforms
+  const platformArr = props.game.platforms;
   return (
     <div className={classes.root}>
       <CardActionArea>
-      <CardHeader
-        title={props.game.name}
-        subheader={`Available on ${platformArr[0].platform.name} & ${platformArr.length - 1} more`}
-      />
+        <CardHeader
+          title={props.game.name}
+          subheader={`Available on ${platformArr[0].platform.name} & ${platformArr.length - 1} more`}
+        />
         <CardMedia
           className={classes.media}
           image={props.game.background_image}
@@ -93,12 +75,12 @@ const ListItem = (props) => {
         <CardContent>
           <Typography color="primary" variant="body2" className={classes.title} component="ul">
             {/* {props.game.genre} */}
-                {props.game.tags[0] ? <li>{props.game.tags[0].name}</li> : ''}
-                {props.game.tags[1] ? <li>{props.game.tags[1].name}</li> : ''}
-                {props.game.tags[2] ? <li>{props.game.tags[2].name}</li> : ''}
-                {props.game.tags[3] ? <li>{props.game.tags[3].name}</li> : ''}
+            {props.game.tags[0] ? <li>{props.game.tags[0].name}</li> : ''}
+            {props.game.tags[1] ? <li>{props.game.tags[1].name}</li> : ''}
+            {props.game.tags[2] ? <li>{props.game.tags[2].name}</li> : ''}
+            {props.game.tags[3] ? <li>{props.game.tags[3].name}</li> : ''}
           </Typography>
-          <br></br>
+          <br />
           {/* {props.game.clip ?
             <CardMedia
             component="iframe"
@@ -108,8 +90,7 @@ const ListItem = (props) => {
             :
             ''
           } */}
-          <div>
-          </div>
+          <div />
         </CardContent>
       </CardActionArea>
       <CardActions>
@@ -129,11 +110,10 @@ const ListItem = (props) => {
         >
           Search Amazon
         </Button>
-        <PhotoModal game={props.game}/>
+        <PhotoModal game={props.game} />
       </CardActions>
     </div>
-  )
-
+  );
 }
 
-export default withStyles(styles)(ListItem);
+export default ListItem;

@@ -1,31 +1,42 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
+const app = express();
+app.use(express.static(`${__dirname}/../react-client/dist`));
+// app.use(bodyParser.json());
+const dotenv = require('dotenv');
 
-var items = require('../database-mongo');
+dotenv.config();
+const cors = require('cors');
 
-var app = express();
+app.use(cors());
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.get('/api/:endpoint', async (req, res) => {
+  const { endpoint } = req.params;
+  const API_KEY = process.env.RAWG_API_KEY;
+  const apiURL = `https://api.rawg.io/api/${endpoint}?key=${API_KEY}`;
 
-// Get all items in the db
-app.get('/items', function (req, res) {
-  // items.selectAll(function(err, data) {
-  //   if(err) {
-  //     res.sendStatus(500);
-  //   } else {
-  //     res.json(data);
-  //   }
-  // });
-  console.log('not implemented yet')
+  try {
+    const apiResponse = await fetch(apiURL);
+    if (!apiResponse.ok) {
+      throw new Error('Failed to fetch game data from RAWG API');
+    }
+    const data = await apiResponse.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
 });
 
-// Get one item
-// app.get('/items:id', function(req, res) {
-
+// app.get('/api/games', function(req, res) {
+//   fetch(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=10`, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       }})
+//       .then(data => data.json())
+//       .then(moreData => this.randomizeArr(moreData.results))
 // })
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+app.listen(3001, () => {
+  console.log('listening on port 3001!');
 });
-

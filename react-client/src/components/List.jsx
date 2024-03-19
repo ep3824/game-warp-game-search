@@ -1,93 +1,70 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import Card from '@mui/material/Card';
+import { styled, withStyles, fade } from '@mui/material/styles';
 import ListItem from './ListItem.jsx';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import GameSearch from './GameSearch.jsx'
-import { withStyles } from '@material-ui/core/styles';
+import GameSearch from './GameSearch.jsx';
 
-const styles = theme => ({
+const apiURL = 'http://192.168.70.11:3001/api';
+
+const styles = (theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9,
-    marginTop:'30'
-  }
-})
+    marginTop: '30',
+  },
+});
 
 class List extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       games: {},
       genres: [],
       platforms: [],
       tags: [],
-    }
+    };
     this.handleListUpdate = this.handleListUpdate.bind(this);
     this.randomizeArr = this.randomizeArr.bind(this);
   }
 
   componentDidMount() {
-    fetch(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=10`, {
-      headers: {
-        'Content-Type': 'application/json',
-      }})
-      .then(data => data.json())
-      .then(moreData => this.randomizeArr(moreData.results))
+    // Fetch genres
+    fetch(`${apiURL}/genres`)
+      .then((response) => response.json())
+      .then((data) => this.setState({
+        genres: this.randomizeArr(data.results),
+      }));
 
-    fetch(`https://api.rawg.io/api/genres?key=${process.env.RAWG_API_KEY}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      }})
-      .then(data => data.json())
-      .then(moreData => this.setState({
-        genres: moreData.results
-      }))
+    // Fetch platforms
+    fetch(`${apiURL}/platforms?page_size=30`)
+      .then((response) => response.json())
+      .then((data) => this.setState({
+        platforms: data.results,
+      }));
 
-    fetch(`https://api.rawg.io/api/platforms?key=${process.env.RAWG_API_KEY}&page_size=30`, {
-      headers: {
-        'Content-Type': 'application/json',
-      }})
-      .then(data => data.json())
-      .then(moreData => this.setState({
-        platforms: moreData.results
-      }))
+    // Fetch tags
+    fetch(`${apiURL}/tags?page_size=20`)
+      .then((response) => response.json())
+      .then((data) => this.setState({
+        tags: this.randomizeArr(data.results),
+      }));
+  }
 
-    fetch(`https://api.rawg.io/api/tags?key=${process.env.RAWG_API_KEY}&page_size=20`, {
-      headers: {
-        'Content-Type': 'application/json',
-      }})
-      .then(data => data.json())
-      .then(moreData => this.setState({
-        tags: moreData.results
-      }))
-    }
-
+  handleListUpdate(genre) {
+    fetch(`${apiURL}/games?genre=${genre}`)
+      .then((data) => data.json())
+      .then((moreData) => this.setState({
+        games: moreData,
+      }));
+  }
 
   randomizeArr(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-    this.setState({
-      games: array
-    })
   }
-
-  handleListUpdate(genre) {
-    fetch(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&genre=${genre}`)
-      .then(data => data.json())
-      .then(moreData => this.setState({
-        games: moreData
-      }))
-  }
-
-
 
   render(props) {
     const { classes } = this.props;
@@ -101,30 +78,32 @@ class List extends React.Component {
           tags={this.state.tags}
           handleReset={this.handleReset}
         />
-        <br></br>
-        { this.state.games.results ?
-        <div>
-        { this.state.games.results.map((game, i) =>
-          <div key={i}>
-              <Card className={classes.root}>
-                {game.name ? <ListItem
-                  game={game}
-                  key={i}
-                  handleListUpdate={this.handleListUpdate}
-                /> : ''}
-              </Card>
-            <br></br>
-          </div>
-        )}
+        <br />
+        { this.state.games.results
+          ? (
+            <div>
+              { this.state.games.results.map((game, i) => (
+                <div key={i}>
+                  <Card className={classes.root}>
+                    {game.name ? (
+                      <ListItem
+                        game={game}
+                        key={i}
+                        handleListUpdate={this.handleListUpdate}
+                      />
+                    ) : ''}
+                  </Card>
+                  <br />
+                </div>
+              ))}
 
-        </div> : <div></div>}
+            </div>
+          ) : <div />}
 
         {this.props.updateList}
       </div>
-    )
+    );
   }
-
 }
 
-
-export default withStyles(styles)(List);
+export default List;

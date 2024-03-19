@@ -1,9 +1,8 @@
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ListContainer from './components/App.jsx'
+import { createRoot } from 'react-dom/client'; // Import createRoot
+import ListContainer from './components/App.jsx';
 
-
+const apiURL = 'http://192.168.70.11:3001/api';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,30 +10,33 @@ class App extends React.Component {
     this.state = {
       items: [],
       genreData: [],
-    }
+    };
   }
 
   componentDidMount() {
-    console.log("process.env", process.env)
+    fetch(`${apiURL}/genres`, {
 
-    fetch(`https://api.rawg.io/api/genres?key=${process.env.RAWG_API_KEY}`)
-      .then(response => response.json())
-      .then(data => this.setState({
-        genreData: data
-      }))
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({
+          genreData: data,
+        });
+      })
+      .catch((error) => {
+        console.error('There was a problem with your fetch operation:', error);
+      });
   }
 
-  // handleGameSearch() {
-  //   fetch('')
-  // }
-
-
-
-  render () {
-    // const { classes } = this.props;
+  render() {
     const divStyle = {
-      background: '#9dabb9'
-    }
+      background: '#9dabb9',
+    };
     return (
       <div style={divStyle}>
         <ListContainer
@@ -42,15 +44,11 @@ class App extends React.Component {
           genres={this.state.genreData}
         />
       </div>
-    )
+    );
   }
 }
 
-// export default withStyles(styles)(App);
-// export default App;
-// ReactDOM.render(<App />, document.getElementById('app'));
+export default App;
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('app'),
-);
+const root = createRoot(document.getElementById('app'));
+root.render(<App />);
