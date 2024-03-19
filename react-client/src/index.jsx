@@ -1,15 +1,9 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
-import List from './components/List.jsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import theme from './theme';
-// import { makeStyles } from '@material-ui/styles'
-import { withStyles } from '@material-ui/core/styles';
 import ListContainer from './components/App.jsx'
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -21,19 +15,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // $.ajax({
-    //   url: '/items',
-    //   success: (data) => {
-    //     this.setState({
-    //       items: data
-    //     })
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
+    console.log("process.env", process.env)
 
-    fetch('https://api.rawg.io/api/genres')
+    fetch(`https://api.rawg.io/api/genres?key=${process.env.RAWG_API_KEY}`)
       .then(response => response.json())
       .then(data => this.setState({
         genreData: data

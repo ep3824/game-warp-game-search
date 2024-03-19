@@ -33,14 +33,14 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://api.rawg.io/api/games?page_size=10', {
+    fetch(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=10`, {
       headers: {
         'Content-Type': 'application/json',
       }})
       .then(data => data.json())
       .then(moreData => this.randomizeArr(moreData.results))
 
-    fetch('https://api.rawg.io/api/genres', {
+    fetch(`https://api.rawg.io/api/genres?key=${process.env.RAWG_API_KEY}`, {
       headers: {
         'Content-Type': 'application/json',
       }})
@@ -49,7 +49,7 @@ class List extends React.Component {
         genres: moreData.results
       }))
 
-    fetch('https://api.rawg.io/api/platforms?page_size=30', {
+    fetch(`https://api.rawg.io/api/platforms?key=${process.env.RAWG_API_KEY}&page_size=30`, {
       headers: {
         'Content-Type': 'application/json',
       }})
@@ -58,7 +58,7 @@ class List extends React.Component {
         platforms: moreData.results
       }))
 
-    fetch('https://api.rawg.io/api/tags?page_size=20', {
+    fetch(`https://api.rawg.io/api/tags?key=${process.env.RAWG_API_KEY}&page_size=20`, {
       headers: {
         'Content-Type': 'application/json',
       }})
@@ -80,7 +80,7 @@ class List extends React.Component {
   }
 
   handleListUpdate(genre) {
-    fetch(`https://api.rawg.io/api/games${genre}`)
+    fetch(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&genre=${genre}`)
       .then(data => data.json())
       .then(moreData => this.setState({
         games: moreData
