@@ -80,7 +80,7 @@ function GameSearch(props) {
 
   const handleClick = function () {
     if (genre && platform && tag) {
-      const comboString = `?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[platform]}&tags=${tag.toLowerCase()}`;
+      const comboString = `games?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[platform]}&tags=${tag.toLowerCase()}`;
       // console.log(comboString)
       props.updateList(comboString);
     } else {

@@ -50,7 +50,7 @@ function getModalStyle() {
 
 function ListItem(props) {
   // const { firstStyle, secondStyle } = useStyles(props);
-  const { classes } = props;
+  // const { classes } = props;
 
   // const handleClick = () => {
   //   let randomGenreIndex = Math.floor(Math.random() * props.game.genres.length)
@@ -60,20 +60,20 @@ function ListItem(props) {
   // }
   const platformArr = props.game.platforms;
   return (
-    <div className={classes.root}>
+    <div>
       <CardActionArea>
         <CardHeader
           title={props.game.name}
           subheader={`Available on ${platformArr[0].platform.name} & ${platformArr.length - 1} more`}
         />
         <CardMedia
-          className={classes.media}
+          // className={classes.media}
           image={props.game.background_image}
           title="Surprised monkey"
         />
         {console.log('hi')}
         <CardContent>
-          <Typography color="primary" variant="body2" className={classes.title} component="ul">
+          <Typography color="primary" variant="body2" component="ul">
             {/* {props.game.genre} */}
             {props.game.tags[0] ? <li>{props.game.tags[0].name}</li> : ''}
             {props.game.tags[1] ? <li>{props.game.tags[1].name}</li> : ''}

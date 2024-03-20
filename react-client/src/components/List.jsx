@@ -51,8 +51,8 @@ class List extends React.Component {
       }));
   }
 
-  handleListUpdate(genre) {
-    fetch(`${apiURL}/games?genre=${genre}`)
+  handleListUpdate(combo) {
+    fetch(`${apiURL}/${combo}`)
       .then((response) => response.json())
       .then((data) => this.setState({
         games: this.randomizeArr(data.results),
@@ -60,6 +60,10 @@ class List extends React.Component {
   }
 
   randomizeArr(array) {
+    if (Array.isArray(array) === false) {
+      console.error('randomizeArr only accepts arrays');
+      return;
+    }
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -80,19 +84,17 @@ class List extends React.Component {
           handleReset={this.handleReset}
         />
         <br />
-        { this.state.games.results
+        { this.state.games.length > 0
           ? (
             <div>
-              { this.state.games.results.map((game, i) => (
+              { this.state.games.map((game, i) => (
                 <div key={i}>
-                  <Card className={classes.root}>
-                    {game.name ? (
-                      <ListItem
-                        game={game}
-                        key={i}
-                        handleListUpdate={this.handleListUpdate}
-                      />
-                    ) : ''}
+                  <Card>
+                    <ListItem
+                      game={game}
+                      key={i}
+                      handleListUpdate={this.handleListUpdate}
+                    />
                   </Card>
                   <br />
                 </div>
