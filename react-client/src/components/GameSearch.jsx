@@ -43,28 +43,28 @@ import { useStyles } from '@mui/material/styles';
 
 function GameSearch(props) {
   // const classes = useStyles();
-  const [att1, setAtt1] = React.useState('');
-  const [att2, setAtt2] = React.useState('');
-  const [att3, setAtt3] = React.useState('');
+  const [genre, setGenre] = React.useState('');
+  const [platform, setPlatform] = React.useState('');
+  const [tag, setTag] = React.useState('');
 
-  const handleChangeAtt1 = (event) => {
-    setAtt1(event.target.value);
+  const handleChangeGenre = (event) => {
+    setGenre(event.target.value);
   };
 
-  const handleChangeAtt2 = (event) => {
-    setAtt2(event.target.value);
+  const handleChangePlatform = (event) => {
+    setPlatform(event.target.value);
   };
 
-  const handleChangeAtt3 = (event) => {
-    setAtt3(event.target.value);
+  const handleChangeTag = (event) => {
+    setTag(event.target.value);
   };
 
   const genreArray = props.genres;
   const platformsArray = props.platforms;
   const tagArray = props.tags;
-  const platformName = att2;
-  let genreName = att1;
-  if (att1 === 'RPG') {
+  const platformName = platform;
+  let genreName = genre;
+  if (genre === 'RPG') {
     genreName = 'role-playing-games-rpg';
   }
   const platformIdNameMap = {};
@@ -79,8 +79,8 @@ function GameSearch(props) {
   convertPlatformName();
 
   const handleClick = function () {
-    if (att1 && att2 && att3) {
-      const comboString = `?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[att2]}&tags=${att3.toLowerCase()}`;
+    if (genre && platform && tag) {
+      const comboString = `?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[platform]}&tags=${tag.toLowerCase()}`;
       // console.log(comboString)
       props.updateList(comboString);
     } else {
@@ -114,8 +114,10 @@ function GameSearch(props) {
             <Select
               labelId="select-label-attribute1"
               id="select-attribute-1"
-              value={att1}
-              onChange={handleChangeAtt1}
+              value={genre}
+              onChange={handleChangeGenre}
+              // Needs responsive width
+              sx={{ width: 160 }}
             >
               {genreArray ? genreArray.map((genre, i) => <MenuItem key={i} value={genreArray[i].name}>{genreArray[i].name}</MenuItem>) : ''}
             </Select>
@@ -126,8 +128,9 @@ function GameSearch(props) {
             <Select
               labelId="select-label-attribute2"
               id="select-attribute-2"
-              value={att2}
-              onChange={handleChangeAtt2}
+              value={platform}
+              onChange={handleChangePlatform}
+              sx={{ width: 160 }}
             >
               {platformsArray ? platformsArray.map((genre, i) => <MenuItem key={i} value={platformsArray[i].name}>{platformsArray[i].name}</MenuItem>) : ''}
             </Select>
@@ -138,8 +141,9 @@ function GameSearch(props) {
             <Select
               labelId="select-label-attribute3"
               id="select-attribute-3"
-              value={att3}
-              onChange={handleChangeAtt3}
+              value={tag}
+              onChange={handleChangeTag}
+              sx={{ width: 160 }}
             >
               {tagArray ? tagArray.map((genre, i) => <MenuItem key={i} value={tagArray[i].name}>{tagArray[i].name}</MenuItem>) : ''}
             </Select>

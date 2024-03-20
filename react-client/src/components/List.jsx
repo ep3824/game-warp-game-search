@@ -40,7 +40,7 @@ class List extends React.Component {
     fetch(`${apiURL}/platforms?page_size=30`)
       .then((response) => response.json())
       .then((data) => this.setState({
-        platforms: data.results,
+        platforms: this.randomizeArr(data.results),
       }));
 
     // Fetch tags
@@ -53,9 +53,9 @@ class List extends React.Component {
 
   handleListUpdate(genre) {
     fetch(`${apiURL}/games?genre=${genre}`)
-      .then((data) => data.json())
-      .then((moreData) => this.setState({
-        games: moreData,
+      .then((response) => response.json())
+      .then((data) => this.setState({
+        games: this.randomizeArr(data.results),
       }));
   }
 
@@ -64,6 +64,7 @@ class List extends React.Component {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
   }
 
   render(props) {
