@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import { styled, withStyles, fade } from '@mui/material/styles';
+import { Box } from '@mui/system';
+import Container from '@mui/material/Container';
 import ListItem from './ListItem.jsx';
 import GameSearch from './GameSearch.jsx';
 
@@ -75,7 +77,8 @@ class List extends React.Component {
     const { classes } = this.props;
     // const classes = useStyles();
     return (
-      <div>
+
+      <Box>
         <GameSearch
           updateList={this.handleListUpdate}
           genres={this.state.genres}
@@ -83,6 +86,7 @@ class List extends React.Component {
           tags={this.state.tags}
           handleReset={this.handleReset}
         />
+
         <br />
         { this.state.games.length > 0
           ? (
@@ -104,7 +108,8 @@ class List extends React.Component {
           ) : <div />}
 
         {this.props.updateList}
-      </div>
+      </Box>
+
     );
   }
 }

@@ -11,6 +11,7 @@ import {
   Select,
   Box,
   Button,
+  Grid,
 } from '@mui/material';
 import { useStyles } from '@mui/material/styles';
 
@@ -92,7 +93,7 @@ function GameSearch(props) {
   // activate on clicking the search button
   // {att1 ? props.updateList(att1) : ''}
   return (
-    <div>
+    <Grid container spacing={2}>
       <Card style={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
         <CardActionArea>
           <CardMedia
@@ -109,53 +110,55 @@ function GameSearch(props) {
           />
           {/* <Typography color="primary" variant="h4" gutterBottom>
         </Typography> */}
-          <FormControl>
-            <InputLabel id="select-label-attribute1">Genre</InputLabel>
-            <Select
-              labelId="select-label-attribute1"
-              id="select-attribute-1"
-              value={genre}
-              onChange={handleChangeGenre}
+          <Box mx={2}>
+            <FormControl>
+              <InputLabel id="select-label-attribute1">Genre</InputLabel>
+              <Select
+                labelId="select-label-attribute1"
+                id="select-attribute-1"
+                value={genre}
+                onChange={handleChangeGenre}
               // Needs responsive width
-              sx={{ width: 160 }}
-            >
-              {genreArray ? genreArray.map((genre, i) => <MenuItem key={i} value={genreArray[i].name}>{genreArray[i].name}</MenuItem>) : ''}
-            </Select>
-          </FormControl>
+                sx={{ width: 160 }}
+              >
+                {genreArray ? genreArray.map((genre, i) => <MenuItem key={i} value={genreArray[i].name}>{genreArray[i].name}</MenuItem>) : ''}
+              </Select>
+            </FormControl>
 
-          <FormControl>
-            <InputLabel id="select-label-attribute2">Platform</InputLabel>
-            <Select
-              labelId="select-label-attribute2"
-              id="select-attribute-2"
-              value={platform}
-              onChange={handleChangePlatform}
-              sx={{ width: 160 }}
-            >
-              {platformsArray ? platformsArray.map((genre, i) => <MenuItem key={i} value={platformsArray[i].name}>{platformsArray[i].name}</MenuItem>) : ''}
-            </Select>
-          </FormControl>
+            <FormControl>
+              <InputLabel id="select-label-attribute2">Platform</InputLabel>
+              <Select
+                labelId="select-label-attribute2"
+                id="select-attribute-2"
+                value={platform}
+                onChange={handleChangePlatform}
+                sx={{ width: 160 }}
+              >
+                {platformsArray ? platformsArray.map((genre, i) => <MenuItem key={i} value={platformsArray[i].name}>{platformsArray[i].name}</MenuItem>) : ''}
+              </Select>
+            </FormControl>
 
-          <FormControl>
-            <InputLabel id="select-label-attribute3">Tags</InputLabel>
-            <Select
-              labelId="select-label-attribute3"
-              id="select-attribute-3"
-              value={tag}
-              onChange={handleChangeTag}
-              sx={{ width: 160 }}
-            >
-              {tagArray ? tagArray.map((genre, i) => <MenuItem key={i} value={tagArray[i].name}>{tagArray[i].name}</MenuItem>) : ''}
-            </Select>
-          </FormControl>
-          <Box my={3} mx={1}>
+            <FormControl>
+              <InputLabel id="select-label-attribute3">Tags</InputLabel>
+              <Select
+                labelId="select-label-attribute3"
+                id="select-attribute-3"
+                value={tag}
+                onChange={handleChangeTag}
+                sx={{ width: '100%' }}
+              >
+                {tagArray ? tagArray.map((genre, i) => <MenuItem key={i} value={tagArray[i].name}>{tagArray[i].name}</MenuItem>) : ''}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box my={3} mx={2}>
             <Button onClick={handleClick} variant="outlined" color="primary">
               Search
             </Button>
           </Box>
         </Box>
       </Card>
-    </div>
+    </Grid>
   );
 }
 

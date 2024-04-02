@@ -49,6 +49,7 @@ function getModalStyle() {
 // }));
 
 function ListItem(props) {
+  console.log(props.game);
   // const { firstStyle, secondStyle } = useStyles(props);
   // const { classes } = props;
 
@@ -69,9 +70,9 @@ function ListItem(props) {
         <CardMedia
           // className={classes.media}
           image={props.game.background_image}
-          title="Surprised monkey"
+          sx={{ height: '25em' }}
+          title={props.game.name}
         />
-        {console.log('hi')}
         <CardContent>
           <Typography color="primary" variant="body2" component="ul">
             {/* {props.game.genre} */}
