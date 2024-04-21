@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import ListItem from './ListItem.jsx';
 import GameSearch from './GameSearch.jsx';
 
-const apiURL = 'http://192.168.70.11:3001/api';
+const apiURL = 'http://192.168.70.11:4002/api';
 
 const styles = (theme) => ({
   media: {

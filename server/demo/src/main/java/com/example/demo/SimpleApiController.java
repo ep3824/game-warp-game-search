@@ -11,7 +11,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @RestController
-@CrossOrigin(origins = "http://192.168.70.11:3000")
 public class SimpleApiController {
 
     @Value("${RAWG_API_KEY}")
@@ -19,11 +18,17 @@ public class SimpleApiController {
 
     private final WebClient webClient = WebClient.create("https://api.rawg.io/api");
 
+    @CrossOrigin(origins = "http://localhost:4000")
     @GetMapping("/api/{endpoint}")
     public Mono<String> fetchFromRawgApi(@PathVariable String endpoint) {
         return webClient.get()
-                .uri("/{endpoint}?key={apiKey}", Map.of("endpoint", endpoint, "apiKey", apiKey))                .retrieve()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/{endpoint}")
+                        .queryParam("key", apiKey)
+                        .build(endpoint))
+                .retrieve()
                 .bodyToMono(String.class)
                 .onErrorResume(e -> Mono.just("Failed to fetch data: " + e.getMessage()));
+
     }
 }
