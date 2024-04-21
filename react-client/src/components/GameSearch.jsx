@@ -94,15 +94,7 @@ function GameSearch(props) {
   // {att1 ? props.updateList(att1) : ''}
   return (
     <Grid container spacing={2}>
-      <Card style={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-        <CardActionArea>
-          <CardMedia
-            // className={classes.media}
-            src="banner.png"
-            title="Tetris"
-          />
-        </CardActionArea>
-      </Card>
+
       <Card>
         <Box>
           <CardHeader

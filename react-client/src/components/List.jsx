@@ -73,25 +73,28 @@ class List extends React.Component {
     return array;
   }
 
-  render(props) {
-    const { classes } = this.props;
+  render() {
+    const { updateList } = this.props;
+    const {
+      games, genres, platforms, tags,
+    } = this.state;
     // const classes = useStyles();
     return (
 
       <Box>
         <GameSearch
           updateList={this.handleListUpdate}
-          genres={this.state.genres}
-          platforms={this.state.platforms}
-          tags={this.state.tags}
+          genres={genres}
+          platforms={platforms}
+          tags={tags}
           handleReset={this.handleReset}
         />
 
         <br />
-        { this.state.games.length > 0
+        { games.length > 0
           ? (
             <div>
-              { this.state.games.map((game, i) => (
+              { games.map((game, i) => (
                 <div key={i}>
                   <Card>
                     <ListItem
@@ -107,7 +110,7 @@ class List extends React.Component {
             </div>
           ) : <div />}
 
-        {this.props.updateList}
+        {updateList}
       </Box>
 
     );
