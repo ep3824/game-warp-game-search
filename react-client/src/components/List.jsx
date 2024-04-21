@@ -80,15 +80,16 @@ class List extends React.Component {
     } = this.state;
     // const classes = useStyles();
     return (
-
-      <Box>
-        <GameSearch
-          updateList={this.handleListUpdate}
-          genres={genres}
-          platforms={platforms}
-          tags={tags}
-          handleReset={this.handleReset}
-        />
+      <>
+        <Box my={3} mx={1}>
+          <GameSearch
+            updateList={this.handleListUpdate}
+            genres={genres}
+            platforms={platforms}
+            tags={tags}
+            handleReset={this.handleReset}
+          />
+        </Box>
 
         <br />
         { games.length > 0
@@ -111,7 +112,7 @@ class List extends React.Component {
           ) : <div />}
 
         {updateList}
-      </Box>
+      </>
 
     );
   }

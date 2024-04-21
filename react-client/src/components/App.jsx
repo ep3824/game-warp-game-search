@@ -121,63 +121,61 @@ export default function ListContainer(props) {
             </Toolbar>
           </AppBar>
         </Box>
-        <Box my={4}>
+        <Box>
           <List />
         </Box>
-        <Box my={4}>
-          <Card>
-            <CardHeader
-              title="About"
-              subheader="Game Warp is a minimalist approach to window shopping for video games.
+        <Card>
+          <CardHeader
+            title="About"
+            subheader="Game Warp is a minimalist approach to window shopping for video games.
             Simply enter a genre, a platform, and a tag, and recieve a list of hand curated
             video games."
-            />
-            <CardContent>
-              <Typography />
-              <Typography>
-                If you would like to contact the developer, please use the buttons below.
-              </Typography>
+          />
+          <CardContent>
+            <Typography />
+            <Typography>
+              If you would like to contact the developer, please use the buttons below.
+            </Typography>
 
-            </CardContent>
-            <Box my={3} mx={1}>
-              <Button
-                size="small"
-                color="primary"
-                variant="outlined"
-                target="_blank"
-                href="mailto:ethan.parent1@gmail.com"
-              >
-                <MailOutlineIcon />
-                EMAIL
-              </Button>
-              <Button
-                size="small"
-                color="primary"
-                variant="outlined"
-                target="_blank"
-                href="http://github.com/ep3824"
-              >
-                <GitHubIcon />
-                GitHub
-              </Button>
-              <Button
-                size="small"
-                color="primary"
-                variant="outlined"
-                target="_blank"
-                href="http://linkedin.com/in/ep3824"
-              >
-                <LinkedInIcon />
-                LinkedIn
-              </Button>
-            </Box>
-            <Box my={3} mx={2}>
-              <Typography>
-                Created by Ethan Parent
-              </Typography>
-            </Box>
-          </Card>
-        </Box>
+          </CardContent>
+          <Box my={3} mx={1}>
+            <Button
+              size="small"
+              color="primary"
+              variant="outlined"
+              target="_blank"
+              href="mailto:ethan.parent1@gmail.com"
+            >
+              <MailOutlineIcon />
+              EMAIL
+            </Button>
+            <Button
+              size="small"
+              color="primary"
+              variant="outlined"
+              target="_blank"
+              href="http://github.com/ep3824"
+            >
+              <GitHubIcon />
+              GitHub
+            </Button>
+            <Button
+              size="small"
+              color="primary"
+              variant="outlined"
+              target="_blank"
+              href="http://linkedin.com/in/ep3824"
+            >
+              <LinkedInIcon />
+              LinkedIn
+            </Button>
+          </Box>
+          <Box my={3} mx={2}>
+            <Typography>
+              Created by Ethan Parent
+            </Typography>
+          </Box>
+        </Card>
       </Container>
     </ThemeProvider>
   );
