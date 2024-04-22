@@ -94,66 +94,62 @@ function GameSearch(props) {
   // activate on clicking the search button
   // {att1 ? props.updateList(att1) : ''}
   return (
-    <Grid container spacing={2}>
-      <Card>
-        <CardHeader
-          title="Enter genre, platform, and tags. Get a list of games."
-        />
-        {/* <Typography color="primary" variant="h4" gutterBottom>
+    <Box>
+      <CardHeader
+        title="Enter genre, platform, and tags. Get a list of games."
+      />
+      {/* <Typography color="primary" variant="h4" gutterBottom>
         </Typography> */}
-        <Box mx={2}>
-          <FormControl sx={{ mt: 5, pt: 1 }}>
-            <InputLabel id="select-label-attribute1">Genre</InputLabel>
-            <Select
-              labelId="select-label-attribute1"
-              id="select-attribute-1"
-              value={genre}
-              onChange={handleChangeGenre}
+      <FormControl sx={{ mt: 5, pt: 1, mx: 2 }}>
+        <InputLabel id="select-label-attribute1">Genre</InputLabel>
+        <Select
+          labelId="select-label-attribute1"
+          id="select-attribute-1"
+          value={genre}
+          onChange={handleChangeGenre}
               // Needs responsive width
-              sx={{ width: 260 }}
-            >
-              {genres ? genres.map((genreItem, i) => <MenuItem key={i} value={genreItem.name}>{genreItem.name}</MenuItem>) : ''}
-            </Select>
-          </FormControl>
+          sx={{ width: 260 }}
+        >
+          {genres ? genres.map((genreItem, i) => <MenuItem key={i} value={genreItem.name}>{genreItem.name}</MenuItem>) : ''}
+        </Select>
+      </FormControl>
 
-          <FormControl sx={{ mt: 5, pt: 1 }}>
-            <InputLabel id="select-label-attribute2">Platform</InputLabel>
-            <Select
-              labelId="select-label-attribute2"
-              id="select-attribute-2"
-              value={platform}
-              onChange={handleChangePlatform}
-              sx={{ width: 260 }}
-            >
-              {platforms ? platforms.map((platformItem, i) => <MenuItem key={i} value={platformItem.name}>{platformItem.name}</MenuItem>) : ''}
-            </Select>
-          </FormControl>
+      <FormControl sx={{ mt: 5, pt: 1 }}>
+        <InputLabel id="select-label-attribute2">Platform</InputLabel>
+        <Select
+          labelId="select-label-attribute2"
+          id="select-attribute-2"
+          value={platform}
+          onChange={handleChangePlatform}
+          sx={{ width: 260 }}
+        >
+          {platforms ? platforms.map((platformItem, i) => <MenuItem key={i} value={platformItem.name}>{platformItem.name}</MenuItem>) : ''}
+        </Select>
+      </FormControl>
 
-          <FormControl sx={{ mt: 5, pt: 1 }}>
-            <InputLabel id="select-label-attribute3">Tags</InputLabel>
-            <Select
-              labelId="select-label-attribute3"
-              id="select-attribute-3"
-              value={tag}
-              onChange={handleChangeTag}
-              sx={{ width: 260 }}
-            >
-              {tags ? tags.map((tagItem, i) => <MenuItem key={i} value={tagItem.name}>{tagItem.name}</MenuItem>) : ''}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box my={3} mx={2}>
-          <Button onClick={handleClick} variant="outlined" color="primary">
-            Search
-          </Button>
-          {
+      <FormControl sx={{ mt: 5, pt: 1 }}>
+        <InputLabel id="select-label-attribute3">Tags</InputLabel>
+        <Select
+          labelId="select-label-attribute3"
+          id="select-attribute-3"
+          value={tag}
+          onChange={handleChangeTag}
+          sx={{ width: 260 }}
+        >
+          {tags ? tags.map((tagItem, i) => <MenuItem key={i} value={tagItem.name}>{tagItem.name}</MenuItem>) : ''}
+        </Select>
+      </FormControl>
+      <Box my={3} mx={2}>
+        <Button onClick={handleClick} variant="outlined" color="primary">
+          Search
+        </Button>
+        {
           errorMsg && (
             <Typography color="error">{errorMsg}</Typography>
           )
         }
-        </Box>
-      </Card>
-    </Grid>
+      </Box>
+    </Box>
   );
 }
 

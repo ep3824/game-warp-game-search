@@ -120,9 +120,7 @@ export default function ListContainer(props) {
             </Toolbar>
           </AppBar>
         </Box>
-        <Box>
-          <List />
-        </Box>
+        <List />
         <br />
         <Card>
           <CardHeader

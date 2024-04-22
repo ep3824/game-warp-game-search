@@ -109,16 +109,13 @@ class List extends React.Component {
     } = this.state;
     return (
       <Card>
-        <Box my={3} mx={2}>
-          <GameSearch
-            updateList={this.handleListUpdate}
-            genres={genres}
-            platforms={platforms}
-            tags={tags}
-            handleReset={this.handleReset}
-          />
-        </Box>
-
+        <GameSearch
+          updateList={this.handleListUpdate}
+          genres={genres}
+          platforms={platforms}
+          tags={tags}
+          handleReset={this.handleReset}
+        />
         <br />
         {games.length > 0 && !isLoading ? (
           <div>
