@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 import { styled, withStyles, fade } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import Container from '@mui/material/Container';
 import ListItem from './ListItem.jsx';
 import GameSearch from './GameSearch.jsx';
+import LoadingComponent from './LoadingComponent.jsx';
 
 const apiURL = 'http://192.168.70.11:4002/api';
 
@@ -21,6 +23,8 @@ class List extends React.Component {
     super(props);
 
     this.state = {
+      isLoading: false,
+      hasGames: null,
       games: [],
       genres: [
         { id: 4, name: 'Action' },
@@ -51,6 +55,7 @@ class List extends React.Component {
   }
 
   handleListUpdate(genre, platform, tag, combo) {
+    this.setState({ isLoading: true });
     fetch(`${apiURL}/${combo}`)
       .then((response) => {
         if (!response.ok) {
@@ -62,11 +67,18 @@ class List extends React.Component {
         const filteredGames = this.filterGameList(genre, platform, tag, data.results);
         console.log('game data', data.results);
         console.log(filteredGames, 'filtered games');
+        if (filteredGames.length > 0) {
+          this.setState({ hasGames: true });
+        } else {
+          this.setState({ hasGames: false });
+        }
         console.log('genre, platform, tag', genre, platform, tag);
         const randomizedGames = this.randomizeArr(filteredGames);
         this.setState({ games: randomizedGames });
+        this.setState({ isLoading: false });
       })
       .catch((error) => {
+        this.setState({ isLoading: false });
         console.error('Error fetching data:', error);
       });
   }
@@ -93,7 +105,7 @@ class List extends React.Component {
   render() {
     const { updateList } = this.props;
     const {
-      games, genres, platforms, tags,
+      games, genres, platforms, tags, isLoading, hasGames,
     } = this.state;
     return (
       <Card>
@@ -108,24 +120,36 @@ class List extends React.Component {
         </Box>
 
         <br />
-        { games.length > 0
-          ? (
-            <div>
-              { games.map((game) => (
-                <div key={game.slug}>
-                  <Card>
-                    <ListItem
-                      game={game}
-                      key={game.slug}
-                      handleListUpdate={this.handleListUpdate}
-                    />
-                  </Card>
-                  <br />
-                </div>
-              ))}
+        {games.length > 0 && !isLoading ? (
+          <div>
+            {games.map((game) => (
+              <div key={game.slug}>
+                <Card>
+                  <ListItem
+                    game={game}
+                    key={game.slug}
+                    handleListUpdate={this.handleListUpdate}
+                  />
+                </Card>
+                <br />
+              </div>
+            ))}
+          </div>
+        ) : null }
+        {
+          hasGames === false && (
+            (
+              <Typography>
+                No games found, please try again.
+              </Typography>
+            )
+          )
+        }
 
-            </div>
-          ) : <div>No games found</div>}
+        {isLoading && (
+          <LoadingComponent />
+        )}
+
       </Card>
 
     );
