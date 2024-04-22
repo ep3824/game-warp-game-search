@@ -124,6 +124,7 @@ export default function ListContainer(props) {
         <Box>
           <List />
         </Box>
+        <br />
         <Card>
           <CardHeader
             title="About"

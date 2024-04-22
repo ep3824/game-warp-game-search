@@ -80,8 +80,8 @@ class List extends React.Component {
     } = this.state;
     // const classes = useStyles();
     return (
-      <>
-        <Box my={3} mx={1}>
+      <Card>
+        <Box my={3} mx={2}>
           <GameSearch
             updateList={this.handleListUpdate}
             genres={genres}
@@ -112,7 +112,7 @@ class List extends React.Component {
           ) : <div />}
 
         {updateList}
-      </>
+      </Card>
 
     );
   }

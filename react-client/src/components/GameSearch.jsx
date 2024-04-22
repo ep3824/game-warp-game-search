@@ -47,6 +47,7 @@ function GameSearch(props) {
   const [genre, setGenre] = React.useState('');
   const [platform, setPlatform] = React.useState('');
   const [tag, setTag] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState(null);
 
   const handleChangeGenre = (event) => {
     setGenre(event.target.value);
@@ -84,8 +85,9 @@ function GameSearch(props) {
       const comboString = `games?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[platform]}&tags=${tag.toLowerCase()}`;
       // console.log(comboString)
       props.updateList(comboString);
+      setErrorMsg(null);
     } else {
-      console.log('error, enter all 4 input fields');
+      setErrorMsg('Please select an option for each category.');
     }
   };
 
@@ -145,6 +147,9 @@ function GameSearch(props) {
           <Button onClick={handleClick} variant="outlined" color="primary">
             Search
           </Button>
+          {
+          errorMsg || null
+        }
         </Box>
       </Card>
     </Grid>
