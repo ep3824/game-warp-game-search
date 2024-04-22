@@ -44,10 +44,10 @@ import { useStyles } from '@mui/material/styles';
 
 function GameSearch(props) {
   // const classes = useStyles();
-  const [genre, setGenre] = React.useState('');
-  const [platform, setPlatform] = React.useState('');
-  const [tag, setTag] = React.useState('');
-  const [errorMsg, setErrorMsg] = React.useState(null);
+  const [genre, setGenre] = useState('');
+  const [platform, setPlatform] = useState('');
+  const [tag, setTag] = useState('');
+  const [errorMsg, setErrorMsg] = useState(null);
   const [platformIdNameMap, setPlatformIdNameMap] = useState({});
 
   const handleChangeGenre = (event) => {
@@ -74,26 +74,16 @@ function GameSearch(props) {
     updateList, genres, platforms, tags,
   } = props;
   const platformName = platform;
-  let genreName = genre;
-  if (genre === 'RPG') {
-    genreName = 'role-playing-games-rpg';
-  }
-
-  const convertPlatformName = function (name) {
-    for (let i = 0; i < props.platforms.length; i++) {
-      const idArr = props.platforms[i].id;
-      const nameArr = props.platforms[i].name;
-      platformIdNameMap[nameArr] = idArr;
-    }
-  };
-
-  convertPlatformName();
 
   const handleClick = function () {
+    let genreName = genre;
+    if (genreName.toLowerCase() === 'rpg') {
+      genreName = 'role-playing-games-rpg';
+    }
     if (genre && platform && tag) {
       const comboString = `games?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[platform]}&tags=${tag.toLowerCase()}`;
-      // console.log(comboString)
-      updateList(comboString);
+      console.log(comboString);
+      updateList(genre, platform, tag, comboString);
       setErrorMsg(null);
     } else {
       setErrorMsg('Please select an option for each category.');

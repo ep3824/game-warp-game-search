@@ -21,7 +21,7 @@ class List extends React.Component {
     super(props);
 
     this.state = {
-      games: {},
+      games: [],
       genres: [
         { id: 4, name: 'Action' },
         { id: 5, name: 'RPG' },
@@ -47,37 +47,35 @@ class List extends React.Component {
 
     this.handleListUpdate = this.handleListUpdate.bind(this);
     this.randomizeArr = this.randomizeArr.bind(this);
+    this.filterGameList = this.filterGameList.bind(this);
   }
 
-  // componentDidMount() {
-  //   // Fetch genres
-  //   fetch(`${apiURL}/genres`)
-  //     .then((response) => response.json())
-  //     .then((data) => this.setState({
-  //       genres: this.randomizeArr(data.results),
-  //     }));
-
-  //   // Fetch platforms
-  //   fetch(`${apiURL}/platforms?page_size=30`)
-  //     .then((response) => response.json())
-  //     .then((data) => this.setState({
-  //       platforms: this.randomizeArr(data.results),
-  //     }));
-
-  //   // Fetch tags
-  //   fetch(`${apiURL}/tags?page_size=20`)
-  //     .then((response) => response.json())
-  //     .then((data) => this.setState({
-  //       tags: this.randomizeArr(data.results),
-  //     }));
-  // }
-
-  handleListUpdate(combo) {
+  handleListUpdate(genre, platform, tag, combo) {
     fetch(`${apiURL}/${combo}`)
-      .then((response) => response.json())
-      .then((data) => this.setState({
-        games: this.randomizeArr(data.results),
-      }));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const filteredGames = this.filterGameList(genre, platform, tag, data.results);
+        console.log('game data', data.results);
+        console.log(filteredGames, 'filtered games');
+        console.log('genre, platform, tag', genre, platform, tag);
+        const randomizedGames = this.randomizeArr(filteredGames);
+        this.setState({ games: randomizedGames });
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+  filterGameList(genre, platform, tag, list) {
+    console.log('this is what the filter game list args look like:', genre, platform, tag);
+    return list.filter((item) => item.platforms.some((p) => p.platform.name === platform)
+    && item.tags.some((t) => t.name === tag)
+    && item.genres.some((g) => g.name === genre));
   }
 
   randomizeArr(array) {
@@ -97,9 +95,6 @@ class List extends React.Component {
     const {
       games, genres, platforms, tags,
     } = this.state;
-    console.log('platforms', platforms);
-    console.log('tags', tags);
-    // const classes = useStyles();
     return (
       <Card>
         <Box my={3} mx={2}>
@@ -130,7 +125,7 @@ class List extends React.Component {
               ))}
 
             </div>
-          ) : <div />}
+          ) : <div>No games found</div>}
       </Card>
 
     );
