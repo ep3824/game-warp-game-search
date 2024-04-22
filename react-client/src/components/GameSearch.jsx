@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Typography,
   Card,
@@ -48,6 +48,7 @@ function GameSearch(props) {
   const [platform, setPlatform] = React.useState('');
   const [tag, setTag] = React.useState('');
   const [errorMsg, setErrorMsg] = React.useState(null);
+  const [platformIdNameMap, setPlatformIdNameMap] = useState({});
 
   const handleChangeGenre = (event) => {
     setGenre(event.target.value);
@@ -61,15 +62,23 @@ function GameSearch(props) {
     setTag(event.target.value);
   };
 
-  const genreArray = props.genres;
-  const platformsArray = props.platforms;
-  const tagArray = props.tags;
+  useEffect(() => {
+    const newPlatformIdNameMap = {};
+    platforms.forEach((platform) => {
+      newPlatformIdNameMap[platform.name] = platform.id;
+    });
+    setPlatformIdNameMap(newPlatformIdNameMap);
+  }, [platforms]);
+
+  const {
+    updateList, genres, platforms, tags,
+  } = props;
   const platformName = platform;
   let genreName = genre;
   if (genre === 'RPG') {
     genreName = 'role-playing-games-rpg';
   }
-  const platformIdNameMap = {};
+
   const convertPlatformName = function (name) {
     for (let i = 0; i < props.platforms.length; i++) {
       const idArr = props.platforms[i].id;
@@ -84,7 +93,7 @@ function GameSearch(props) {
     if (genre && platform && tag) {
       const comboString = `games?genres=${genreName.toLowerCase()}&platforms=${platformIdNameMap[platform]}&tags=${tag.toLowerCase()}`;
       // console.log(comboString)
-      props.updateList(comboString);
+      updateList(comboString);
       setErrorMsg(null);
     } else {
       setErrorMsg('Please select an option for each category.');
@@ -113,7 +122,7 @@ function GameSearch(props) {
               // Needs responsive width
               sx={{ width: 160 }}
             >
-              {genreArray ? genreArray.map((genre, i) => <MenuItem key={i} value={genreArray[i].name}>{genreArray[i].name}</MenuItem>) : ''}
+              {genres ? genres.map((genreItem, i) => <MenuItem key={i} value={genreItem.name}>{genreItem.name}</MenuItem>) : ''}
             </Select>
           </FormControl>
 
@@ -126,7 +135,7 @@ function GameSearch(props) {
               onChange={handleChangePlatform}
               sx={{ width: 160 }}
             >
-              {platformsArray ? platformsArray.map((genre, i) => <MenuItem key={i} value={platformsArray[i].name}>{platformsArray[i].name}</MenuItem>) : ''}
+              {platforms ? platforms.map((platformItem, i) => <MenuItem key={i} value={platformItem.name}>{platformItem.name}</MenuItem>) : ''}
             </Select>
           </FormControl>
 
@@ -139,7 +148,7 @@ function GameSearch(props) {
               onChange={handleChangeTag}
               sx={{ width: '100%' }}
             >
-              {tagArray ? tagArray.map((genre, i) => <MenuItem key={i} value={tagArray[i].name}>{tagArray[i].name}</MenuItem>) : ''}
+              {tags ? tags.map((tagItem, i) => <MenuItem key={i} value={tagItem.name}>{tagItem.name}</MenuItem>) : ''}
             </Select>
           </FormControl>
         </Box>
@@ -148,7 +157,9 @@ function GameSearch(props) {
             Search
           </Button>
           {
-          errorMsg || null
+          errorMsg && (
+            <Typography color="error">{errorMsg}</Typography>
+          )
         }
         </Box>
       </Card>

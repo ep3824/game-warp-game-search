@@ -22,36 +22,55 @@ class List extends React.Component {
 
     this.state = {
       games: {},
-      genres: [],
-      platforms: [],
-      tags: [],
+      genres: [
+        { id: 4, name: 'Action' },
+        { id: 5, name: 'RPG' },
+        { id: 2, name: 'Shooter' },
+        { id: 3, name: 'Adventure' },
+        { id: 10, name: 'Strategy' },
+      ],
+      platforms: [
+        { id: 4, name: 'PC' },
+        { id: 18, name: 'PlayStation 4' },
+        { id: 1, name: 'Xbox One' },
+        { id: 7, name: 'Nintendo Switch' },
+        { id: 187, name: 'PlayStation 5' },
+      ],
+      tags: [
+        { id: 7, name: 'Multiplayer' },
+        { id: 18, name: 'Co-op' },
+        { id: 24, name: 'RPG' },
+        { id: 13, name: 'Atmospheric' },
+        { id: 31, name: 'Singleplayer' },
+      ],
     };
+
     this.handleListUpdate = this.handleListUpdate.bind(this);
     this.randomizeArr = this.randomizeArr.bind(this);
   }
 
-  componentDidMount() {
-    // Fetch genres
-    fetch(`${apiURL}/genres`)
-      .then((response) => response.json())
-      .then((data) => this.setState({
-        genres: this.randomizeArr(data.results),
-      }));
+  // componentDidMount() {
+  //   // Fetch genres
+  //   fetch(`${apiURL}/genres`)
+  //     .then((response) => response.json())
+  //     .then((data) => this.setState({
+  //       genres: this.randomizeArr(data.results),
+  //     }));
 
-    // Fetch platforms
-    fetch(`${apiURL}/platforms?page_size=30`)
-      .then((response) => response.json())
-      .then((data) => this.setState({
-        platforms: this.randomizeArr(data.results),
-      }));
+  //   // Fetch platforms
+  //   fetch(`${apiURL}/platforms?page_size=30`)
+  //     .then((response) => response.json())
+  //     .then((data) => this.setState({
+  //       platforms: this.randomizeArr(data.results),
+  //     }));
 
-    // Fetch tags
-    fetch(`${apiURL}/tags?page_size=20`)
-      .then((response) => response.json())
-      .then((data) => this.setState({
-        tags: this.randomizeArr(data.results),
-      }));
-  }
+  //   // Fetch tags
+  //   fetch(`${apiURL}/tags?page_size=20`)
+  //     .then((response) => response.json())
+  //     .then((data) => this.setState({
+  //       tags: this.randomizeArr(data.results),
+  //     }));
+  // }
 
   handleListUpdate(combo) {
     fetch(`${apiURL}/${combo}`)
@@ -78,6 +97,8 @@ class List extends React.Component {
     const {
       games, genres, platforms, tags,
     } = this.state;
+    console.log('platforms', platforms);
+    console.log('tags', tags);
     // const classes = useStyles();
     return (
       <Card>
@@ -95,12 +116,12 @@ class List extends React.Component {
         { games.length > 0
           ? (
             <div>
-              { games.map((game, i) => (
-                <div key={i}>
+              { games.map((game) => (
+                <div key={game.slug}>
                   <Card>
                     <ListItem
                       game={game}
-                      key={i}
+                      key={game.slug}
                       handleListUpdate={this.handleListUpdate}
                     />
                   </Card>
@@ -110,8 +131,6 @@ class List extends React.Component {
 
             </div>
           ) : <div />}
-
-        {updateList}
       </Card>
 
     );
