@@ -102,7 +102,7 @@ function GameSearch(props) {
         {/* <Typography color="primary" variant="h4" gutterBottom>
         </Typography> */}
         <Box mx={2}>
-          <FormControl>
+          <FormControl sx={{ mt: 5, pt: 1 }}>
             <InputLabel id="select-label-attribute1">Genre</InputLabel>
             <Select
               labelId="select-label-attribute1"
@@ -110,33 +110,33 @@ function GameSearch(props) {
               value={genre}
               onChange={handleChangeGenre}
               // Needs responsive width
-              sx={{ width: 160 }}
+              sx={{ width: 260 }}
             >
               {genres ? genres.map((genreItem, i) => <MenuItem key={i} value={genreItem.name}>{genreItem.name}</MenuItem>) : ''}
             </Select>
           </FormControl>
 
-          <FormControl>
+          <FormControl sx={{ mt: 5, pt: 1 }}>
             <InputLabel id="select-label-attribute2">Platform</InputLabel>
             <Select
               labelId="select-label-attribute2"
               id="select-attribute-2"
               value={platform}
               onChange={handleChangePlatform}
-              sx={{ width: 160 }}
+              sx={{ width: 260 }}
             >
               {platforms ? platforms.map((platformItem, i) => <MenuItem key={i} value={platformItem.name}>{platformItem.name}</MenuItem>) : ''}
             </Select>
           </FormControl>
 
-          <FormControl>
+          <FormControl sx={{ mt: 5, pt: 1 }}>
             <InputLabel id="select-label-attribute3">Tags</InputLabel>
             <Select
               labelId="select-label-attribute3"
               id="select-attribute-3"
               value={tag}
               onChange={handleChangeTag}
-              sx={{ width: '100%' }}
+              sx={{ width: 260 }}
             >
               {tags ? tags.map((tagItem, i) => <MenuItem key={i} value={tagItem.name}>{tagItem.name}</MenuItem>) : ''}
             </Select>

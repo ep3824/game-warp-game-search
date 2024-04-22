@@ -18,7 +18,7 @@ public class SimpleApiController {
 
     private final WebClient webClient = WebClient.create("https://api.rawg.io/api");
 
-    @CrossOrigin(origins = "http://localhost:4000")
+    @CrossOrigin(origins = { "http://localhost:4000" })
     @GetMapping("/api/{endpoint}")
     public Mono<String> fetchFromRawgApi(@PathVariable String endpoint) {
         return webClient.get()
