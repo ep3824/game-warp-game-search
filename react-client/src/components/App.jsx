@@ -98,25 +98,24 @@ export default function ListContainer(props) {
         <Box my={4}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton
+              {/* <IconButton
                 edge="start"
-              // className={classes.menuButton}
                 color="inherit"
                 aria-label="open drawer"
               >
                 <MenuIcon />
-              </IconButton>
+              </IconButton> */}
               <Typography variant="h6" noWrap>
                 Game Warp Home
               </Typography>
               <div>
-                <div>
+                {/* <div>
                   <SearchIcon />
                 </div>
                 <InputBase
                   placeholder="Search..."
                   inputProps={{ 'aria-label': 'search' }}
-                />
+                /> */}
               </div>
             </Toolbar>
           </AppBar>
