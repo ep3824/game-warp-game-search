@@ -114,7 +114,7 @@ function GameSearch(props) {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ mt: 5, pt: 1 }}>
+      <FormControl sx={{ mt: 5, pt: 1, mx: 2 }}>
         <InputLabel id="select-label-attribute2">Platform</InputLabel>
         <Select
           labelId="select-label-attribute2"
@@ -127,7 +127,7 @@ function GameSearch(props) {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ mt: 5, pt: 1 }}>
+      <FormControl sx={{ mt: 5, pt: 1, mx: 2 }}>
         <InputLabel id="select-label-attribute3">Tags</InputLabel>
         <Select
           labelId="select-label-attribute3"
