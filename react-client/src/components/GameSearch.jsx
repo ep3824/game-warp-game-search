@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Typography,
-  Card,
-  CardActionArea,
-  CardMedia,
   CardHeader,
   InputLabel,
   MenuItem,
@@ -11,44 +8,18 @@ import {
   Select,
   Box,
   Button,
-  Grid,
-} from '@mui/material';
-import { useStyles } from '@mui/material/styles';
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     '& > *': {
-//       margin: theme.spacing(1),
-//       width: '25ch',
-//     },
-//   },
-//   media: {
-//     paddingTop: '56.25%', // 16:9,
-//     marginTop:'30',
-//   },
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 120,
-//   },
-//   selectEmpty: {
-//     marginTop: theme.spacing(2),
-//   },
-//   inputRoot: {
-//     fontSize: 25
-//   },
-//   labelRoot: {
-//     fontSize: 25,
-//     color: "red",
-//   }
-// }));
+} from '@mui/material';
 
 function GameSearch(props) {
-  // const classes = useStyles();
   const [genre, setGenre] = useState('');
   const [platform, setPlatform] = useState('');
   const [tag, setTag] = useState('');
   const [errorMsg, setErrorMsg] = useState(null);
   const [platformIdNameMap, setPlatformIdNameMap] = useState({});
+  const {
+    updateList, genres, platforms, tags,
+  } = props;
 
   const handleChangeGenre = (event) => {
     setGenre(event.target.value);
@@ -64,16 +35,11 @@ function GameSearch(props) {
 
   useEffect(() => {
     const newPlatformIdNameMap = {};
-    platforms.forEach((platform) => {
-      newPlatformIdNameMap[platform.name] = platform.id;
+    platforms.forEach((p) => {
+      newPlatformIdNameMap[p.name] = p.id;
     });
     setPlatformIdNameMap(newPlatformIdNameMap);
   }, [platforms]);
-
-  const {
-    updateList, genres, platforms, tags,
-  } = props;
-  const platformName = platform;
 
   const handleClick = function () {
     let genreName = genre;
@@ -90,16 +56,11 @@ function GameSearch(props) {
     }
   };
 
-  // create function that calls updateList correctly according to user inpht
-  // activate on clicking the search button
-  // {att1 ? props.updateList(att1) : ''}
   return (
     <Box>
       <CardHeader
         title="Enter genre, platform, and tags. Get a list of games."
       />
-      {/* <Typography color="primary" variant="h4" gutterBottom>
-        </Typography> */}
       <FormControl sx={{ mt: 5, pt: 1, mx: 2 }}>
         <InputLabel id="select-label-attribute1">Genre</InputLabel>
         <Select
@@ -110,7 +71,7 @@ function GameSearch(props) {
               // Needs responsive width
           sx={{ width: 260 }}
         >
-          {genres ? genres.map((genreItem, i) => <MenuItem key={i} value={genreItem.name}>{genreItem.name}</MenuItem>) : ''}
+          {genres ? genres.map((genreItem) => <MenuItem key={genreItem.name} value={genreItem.name}>{genreItem.name}</MenuItem>) : ''}
         </Select>
       </FormControl>
 
@@ -123,7 +84,7 @@ function GameSearch(props) {
           onChange={handleChangePlatform}
           sx={{ width: 260 }}
         >
-          {platforms ? platforms.map((platformItem, i) => <MenuItem key={i} value={platformItem.name}>{platformItem.name}</MenuItem>) : ''}
+          {platforms ? platforms.map((platformItem) => <MenuItem key={platformItem.name} value={platformItem.name}>{platformItem.name}</MenuItem>) : ''}
         </Select>
       </FormControl>
 
@@ -140,7 +101,7 @@ function GameSearch(props) {
         </Select>
       </FormControl>
       <Box my={3} mx={2}>
-        <Button onClick={handleClick} variant="outlined" color="primary">
+        <Button onClick={() => handleClick()} variant="outlined" color="primary">
           Search
         </Button>
         {

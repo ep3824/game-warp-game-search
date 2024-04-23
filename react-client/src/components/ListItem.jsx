@@ -2,9 +2,6 @@ import React from 'react';
 import {
   Button, Typography, CardContent, CardHeader, CardActionArea, CardMedia, CardActions,
 } from '@mui/material';
-import PhotoModal from './PhotoModal.jsx';
-
-// import { createMuiTheme } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
   root: {
@@ -20,8 +17,10 @@ const styles = (theme) => ({
 
 function ListItem(props) {
   const {
-    tags, name, backgroundImage, platforms,
+    tags, name, background_image, platforms,
   } = props.game;
+  // The API refers to background_image, so fine, I'll take that and rename it here
+  const backgroundImage = background_image;
   return (
     <div>
       <CardActionArea>

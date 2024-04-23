@@ -1,22 +1,11 @@
 import React, { Suspense } from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { styled, withStyles, fade } from '@mui/material/styles';
-import { Box } from '@mui/system';
-import Container from '@mui/material/Container';
 import ListItem from './ListItem.jsx';
 import GameSearch from './GameSearch.jsx';
 import LoadingComponent from './LoadingComponent.jsx';
 
 const apiURL = 'http://192.168.70.11:4002/api';
-
-const styles = (theme) => ({
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9,
-    marginTop: '30',
-  },
-});
 
 class List extends React.Component {
   constructor(props) {
@@ -65,14 +54,14 @@ class List extends React.Component {
       })
       .then((data) => {
         const filteredGames = this.filterGameList(genre, platform, tag, data.results);
-        console.log('game data', data.results);
-        console.log(filteredGames, 'filtered games');
+        // console.log('game data', data.results);
+        // console.log(filteredGames, 'filtered games');
         if (filteredGames.length > 0) {
           this.setState({ hasGames: true });
         } else {
           this.setState({ hasGames: false });
         }
-        console.log('genre, platform, tag', genre, platform, tag);
+        // console.log('genre, platform, tag', genre, platform, tag);
         const randomizedGames = this.randomizeArr(filteredGames);
         this.setState({ games: randomizedGames });
         this.setState({ isLoading: false });
