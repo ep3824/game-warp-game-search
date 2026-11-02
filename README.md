@@ -16,7 +16,6 @@
 ## How to Get Started ##
   > To get started, simply fork, clone, `npm i`.
   > To start the client server, run: `npm start` from the root directory. Run the Java server with `./gradlew build`, and then `./gradlew bootRun` from the /server/demo directory.
-  > Production app coming soon to https://www.ethanparent.com
 
 ## Customer Feedback ##
   > "This app helped me find Breath of the Wild for the Nintendo Switch and now I can't put it down! Thanks Ethan!"
